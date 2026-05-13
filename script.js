@@ -10,6 +10,7 @@ const revealTargets = [
   ".skill-group",
   ".education-grid article",
   ".resume-panel",
+  ".final-cta",
   ".site-footer",
 ].join(",");
 
