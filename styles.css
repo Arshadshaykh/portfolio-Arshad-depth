@@ -24,6 +24,8 @@ html {
 }
 
 body {
+  position: relative;
+  isolation: isolate;
   margin: 0;
   background:
     linear-gradient(180deg, #fbfaf7 0, var(--bg) 520px),
@@ -31,6 +33,42 @@ body {
   color: var(--ink);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.6;
+  overflow-x: hidden;
+}
+
+body::before,
+body::after {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  content: "";
+}
+
+body::before {
+  background:
+    radial-gradient(circle at 14% 18%, rgba(0, 124, 120, 0.28), transparent 32%),
+    radial-gradient(circle at 84% 14%, rgba(217, 95, 67, 0.22), transparent 30%),
+    radial-gradient(circle at 62% 82%, rgba(211, 155, 42, 0.2), transparent 34%),
+    linear-gradient(115deg, rgba(0, 124, 120, 0.13), transparent 32% 70%, rgba(217, 95, 67, 0.12));
+  background-size: 160% 160%, 140% 140%, 100% 100%;
+  filter: blur(15px);
+  opacity: 0.9;
+  transform: scale(1.08);
+  animation: ambient-shift 18s ease-in-out infinite alternate;
+}
+
+body::after {
+  z-index: -1;
+  background-image:
+    linear-gradient(rgba(0, 124, 120, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 124, 120, 0.06) 1px, transparent 1px),
+    radial-gradient(circle at 50% 44%, rgba(255, 255, 255, 0.26), transparent 36%);
+  background-position: 0 0;
+  background-size: 44px 44px, 44px 44px, 100% 100%;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.82), transparent 78%);
+  opacity: 0.62;
+  animation: grid-drift 26s linear infinite;
 }
 
 a {
@@ -603,6 +641,30 @@ h3 {
   font-weight: 750;
 }
 
+@keyframes ambient-shift {
+  0% {
+    background-position: 0% 18%, 90% 10%, center;
+  }
+
+  50% {
+    background-position: 70% 42%, 28% 60%, center;
+  }
+
+  100% {
+    background-position: 100% 72%, 0% 90%, center;
+  }
+}
+
+@keyframes grid-drift {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 44px 44px;
+  }
+}
+
 .reveal-on-scroll {
   opacity: 0;
   transform: translateY(28px);
@@ -732,5 +794,10 @@ h3 {
   .reveal-on-scroll {
     opacity: 1;
     transform: none;
+  }
+
+  body::before,
+  body::after {
+    animation: none;
   }
 }
